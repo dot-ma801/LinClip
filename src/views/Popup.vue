@@ -85,6 +85,11 @@ const buttons = {
 </script>
 
 <template>
+	<div class="title-container">
+		<v-icon size="64" color="success">mdi-content-copy</v-icon>
+		<span class="title-character">LinClip</span>
+	</div>
+
 	<div class="button-container">
 		<template v-for="(item, key) in buttons">
 			<v-btn :prepend-icon="item.prependIcon" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
@@ -104,8 +109,22 @@ const buttons = {
 </template>
 
 <style scoped>
+.title-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 15px;
+	padding-bottom: 0;
+}
+
+.title-character {
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 8px;
+	color: var(--vt-c-black);
+}
+
 .button-container {
-	background-color: #efeef5;
 	padding: 30px;
 	display: flex;
 	flex-direction: column;

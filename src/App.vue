@@ -10,5 +10,6 @@ import Popup from '@/views/Popup.vue';
 <style>
 body {
 	width: 400px;
+	background-color: #efeef5;
 }
 </style>
