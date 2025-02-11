@@ -2,6 +2,8 @@
 
 LinClipは、WebページのURLをMarkdown形式やHTMLリンク形式で簡単にコピーできるChrome拡張です。
 
+![](./public/image.png)
+
 ## 特徴
 
 - WebページのタイトルとURLを取得し、簡単にクリップボードへコピー
