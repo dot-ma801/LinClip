@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { getTabInfo } from '@/Utils/tabs';
 import { copyToClipboard } from '@/Utils/copy';
+import { ref } from 'vue';
+
+type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
+
+const copyStatus = ref<CopyStatus>('waiting');
 
 const onclickMarkdown = async () => {
 	const { title, url } = await getTabInfo();
 	const markdownText = `[${title}](${url})`;
 	const blob = {
-		'text/plain': new Blob([markdownText], { type: 'text/plain' }),
+		'text/plain': new Blob([markdownText], { type: 'text/plai' }),
 	};
 	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipboard(clipboardItem);
+	copyToClipboardWithStatus(clipboardItem);
 };
 
 const onclickBlob = async () => {
@@ -23,7 +28,7 @@ const onclickBlob = async () => {
 	};
 	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipboard(clipboardItem);
+	copyToClipboardWithStatus(clipboardItem);
 };
 
 const onclickText = async () => {
@@ -34,13 +39,40 @@ const onclickText = async () => {
 	};
 	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipboard(clipboardItem);
+	copyToClipboardWithStatus(clipboardItem);
+};
+
+const copyToClipboardWithStatus = (clipboardItem: ClipboardItem) => {
+	copyStatus.value = 'loading';
+	copyToClipboard(
+		clipboardItem,
+		() => {
+			copyStatus.value = 'success';
+			setTimeout(() => {
+				copyStatus.value = 'waiting';
+			}, 3000);
+		},
+		() => {
+			copyStatus.value = 'fail';
+			setTimeout(() => {
+				copyStatus.value = 'waiting';
+			}, 3000);
+		}
+	);
 };
 </script>
 
 <template>
 	<div class="button-container">
-		<v-btn prepend-icon="mdi-alpha-m-box" @click="onclickMarkdown"> Copy Link as Markdown</v-btn>
+		<v-btn prepend-icon="mdi-alpha-m-box" :disabled="copyStatus == 'loading'" @click="onclickMarkdown">
+			Copy Link as Markdown
+			<template v-slot:append v-if="copyStatus == 'success'">
+				<v-icon color="success">mdi-check-circle</v-icon>
+			</template>
+			<template v-slot:append v-if="copyStatus == 'fail'">
+				<v-icon color="error">mdi-close-circle</v-icon>
+			</template>
+		</v-btn>
 		<v-btn prepend-icon="mdi-code-braces" @click="onclickBlob"> Copy Link as Blob</v-btn>
 		<v-btn prepend-icon="mdi-format-text" @click="onclickText"> Copy Title as Text</v-btn>
 		<v-divider></v-divider>
