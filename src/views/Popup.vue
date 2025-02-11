@@ -89,11 +89,12 @@ const buttons = {
 		<template v-for="(item, key) in buttons">
 			<v-btn :prepend-icon="item.prependIcon" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
 				{{ item.btnText }}
-				<template v-slot:append v-if="copyStatus[key] == 'success'">
-					<v-icon color="success">mdi-check-circle</v-icon>
-				</template>
-				<template v-slot:append v-if="copyStatus[key] == 'fail'">
-					<v-icon color="error">mdi-close-circle</v-icon>
+				<!-- FIXME: ボタンの外に出したい: Styleが崩れてしまい、うまく出せていない -->
+				<template v-slot:append>
+					<Transition name="bounce">
+						<v-icon v-if="copyStatus[key] == 'success'" color="success">mdi-check-circle</v-icon>
+						<v-icon v-if="copyStatus[key] == 'fail'" color="error">mdi-close-circle</v-icon>
+					</Transition>
 				</template>
 			</v-btn>
 		</template>
@@ -109,6 +110,35 @@ const buttons = {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+.bounce-enter-active {
+	transition:
+		transform 0.5s ease,
+		opacity 0.5s ease;
+}
+
+.bounce-leave-active {
+	transition:
+		transform 0.5s ease,
+		opacity 0.5s ease;
+}
+
+.bounce-enter-from,
+.bounce-leave-to {
+	transform: scale(0);
+	opacity: 0;
+}
+
+.bounce-enter-to,
+.bounce-leave-from {
+	transform: scale(1.2);
+	opacity: 1;
+}
+
+.bounce-leave-to {
+	opacity: 0;
+	transition-delay: 0.1s;
 }
 
 /* v-btnがTextをすべて大文字に変える仕様なので、その対応 */
