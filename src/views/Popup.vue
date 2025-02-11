@@ -101,8 +101,10 @@ const buttons = {
 		<v-btn prepend-icon="mdi-plus" stacked :disabled="true"> add another pattern </v-btn>
 	</div>
 </template>
+
 <style scoped>
 .button-container {
+	background-color: #efeef5;
 	padding: 30px;
 	display: flex;
 	flex-direction: column;
