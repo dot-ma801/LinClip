@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getTabInfo } from '@/Utils/tabs';
-import { copyToClipbord } from '@/Utils/copy';
+import { copyToClipboard } from '@/Utils/copy';
 
 const onclickMarkdown = async () => {
 	const { title, url } = await getTabInfo();
@@ -8,9 +8,9 @@ const onclickMarkdown = async () => {
 	const blob = {
 		'text/plain': new Blob([markdownText], { type: 'text/plain' }),
 	};
-	const clipbordItem = new ClipboardItem(blob);
+	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipbord(clipbordItem);
+	copyToClipboard(clipboardItem);
 };
 
 const onclickBlob = async () => {
@@ -21,9 +21,9 @@ const onclickBlob = async () => {
 			type: 'text/html',
 		}),
 	};
-	const clipbordItem = new ClipboardItem(blob);
+	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipbord(clipbordItem);
+	copyToClipboard(clipboardItem);
 };
 
 const onclickText = async () => {
@@ -32,9 +32,9 @@ const onclickText = async () => {
 	const blob = {
 		'text/plain': new Blob([text], { type: 'text/plain' }),
 	};
-	const clipbordItem = new ClipboardItem(blob);
+	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipbord(clipbordItem);
+	copyToClipboard(clipboardItem);
 };
 </script>
 

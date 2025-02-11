@@ -16,7 +16,7 @@ export const getTabInfo = async () => {
  * @returns 現在のTabのURL
  */
 export const getCurrentTabUrl = async () => {
-	const tabInfo = await getCurentTabInfo();
+	const tabInfo = await getCurrentTabInfo();
 	return tabInfo[0].url;
 };
 
@@ -26,7 +26,7 @@ export const getCurrentTabUrl = async () => {
  * @returns 現在のTabのTitle
  */
 export const getCurrentTabTitle = async () => {
-	const tabInfo = await getCurentTabInfo();
+	const tabInfo = await getCurrentTabInfo();
 	return tabInfo[0].title;
 };
 
@@ -35,7 +35,7 @@ export const getCurrentTabTitle = async () => {
  *
  * @returns 現在のTabの詳細情報
  */
-const getCurentTabInfo = async () => {
+const getCurrentTabInfo = async () => {
 	const queryOptions = { active: true, lastFocusedWindow: true };
 	const tabInfo = await chrome.tabs.query(queryOptions);
 	return tabInfo;
