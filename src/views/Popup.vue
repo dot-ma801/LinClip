@@ -5,6 +5,9 @@ import { ref } from 'vue';
 
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
+const ignoreQuery = ref(false);
+const ignoreAnchor = ref(false);
+
 const copyStatus = ref<{ markdown: CopyStatus; blob: CopyStatus; text: CopyStatus }>({
 	markdown: 'waiting',
 	blob: 'waiting',
@@ -12,7 +15,7 @@ const copyStatus = ref<{ markdown: CopyStatus; blob: CopyStatus; text: CopyStatu
 });
 
 const onclickMarkdown = async () => {
-	const { title, url } = await getTabInfo();
+	const { title, url } = await getTabInfo(ignoreQuery.value, ignoreAnchor.value);
 	const markdownText = `[${title}](${url})`;
 	const blob = {
 		'text/plain': new Blob([markdownText], { type: 'text/plain' }),
@@ -23,7 +26,7 @@ const onclickMarkdown = async () => {
 };
 
 const onclickBlob = async () => {
-	const { title, url } = await getTabInfo();
+	const { title, url } = await getTabInfo(ignoreQuery.value, ignoreAnchor.value);
 
 	const blob = {
 		'text/html': new Blob([`<a href="${url}">${title}</a>`], {
@@ -91,14 +94,33 @@ const buttons = {
 	</div>
 
 	<div class="button-container">
+		<v-expansion-panels>
+			<v-expansion-panel>
+				<v-expansion-panel-title height="36px">
+					<v-icon size="x-small">mdi-cog</v-icon>
+					<span style="margin-left: 5px">options</span>
+				</v-expansion-panel-title>
+				<v-expansion-panel-text>
+					<div class="checkbox-container">
+						<v-checkbox v-model="ignoreQuery" hide-details label="kill query(?)"></v-checkbox>
+						<v-checkbox v-model="ignoreAnchor" hide-details label="kill anchor(#)"></v-checkbox>
+					</div>
+				</v-expansion-panel-text>
+			</v-expansion-panel>
+		</v-expansion-panels>
+
+		<v-divider></v-divider>
+
 		<template v-for="(item, key) in buttons">
 			<v-btn :prepend-icon="item.prependIcon" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
 				{{ item.btnText }}
 				<!-- FIXME: ボタンの外に出したい: Styleが崩れてしまい、うまく出せていない -->
 				<template v-slot:append>
 					<Transition name="bounce">
-						<v-icon v-if="copyStatus[key] == 'success'" color="success">mdi-check-circle</v-icon>
-						<v-icon v-if="copyStatus[key] == 'fail'" color="error">mdi-close-circle</v-icon>
+						<div>
+							<v-icon v-if="copyStatus[key] == 'success'" color="success">mdi-check-circle</v-icon>
+							<v-icon v-if="copyStatus[key] == 'fail'" color="error">mdi-close-circle</v-icon>
+						</div>
 					</Transition>
 				</template>
 			</v-btn>
@@ -122,6 +144,11 @@ const buttons = {
 	font-weight: bold;
 	margin-left: 8px;
 	color: var(--vt-c-black);
+}
+
+.checkbox-container {
+	display: flex;
+	justify-content: space-around;
 }
 
 .button-container {
