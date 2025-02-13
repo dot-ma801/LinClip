@@ -1,11 +1,13 @@
 /**
  * 現在のタブタイトルとURLをまとめて取得する
  *
+ * @param ignoreQuery URLに付いてクエリパラメータを無視する
+ * @param ignoreAnchor URLについてアンカーを無視する
  * @returns タブタイトル、URL
  */
-export const getTabInfo = async () => {
+export const getTabInfo = async (ignoreQuery?: boolean, ignoreAnchor?: boolean) => {
 	const title = await getCurrentTabTitle();
-	const url = await getCurrentTabUrl();
+	const url = await getCurrentTabUrl(ignoreQuery, ignoreAnchor);
 
 	return { title, url };
 };
@@ -13,11 +15,27 @@ export const getTabInfo = async () => {
 /**
  * 現在開いているTabのURLを取得する
  *
+ * @param ignoreQuery クエリパラメータを無視する
+ * @param ignoreAnchor アンカーを無視する
  * @returns 現在のTabのURL
  */
-export const getCurrentTabUrl = async () => {
+export const getCurrentTabUrl = async (ignoreQuery?: boolean, ignoreAnchor?: boolean) => {
 	const tabInfo = await getCurrentTabInfo();
-	return tabInfo[0].url;
+	let url = tabInfo[0].url;
+
+	if (!url) {
+		return '';
+	}
+
+	if (ignoreQuery) {
+		url = url.split('?')[0];
+	}
+
+	if (ignoreAnchor) {
+		url = url.split('#')[0];
+	}
+
+	return url;
 };
 
 /**
