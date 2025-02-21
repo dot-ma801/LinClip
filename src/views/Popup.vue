@@ -3,6 +3,8 @@ import { getTabInfo } from '@/Utils/tabs';
 import { copyToClipboard } from '@/Utils/copy';
 import { ref } from 'vue';
 
+import IconBtnWithSlash from '@/components/IconBtnWithSlash.vue';
+
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
 const ignoreQuery = ref(false);
@@ -94,7 +96,8 @@ const buttons = {
 	</div>
 
 	<div class="button-container">
-		<v-expansion-panels>
+		<IconBtnWithSlash></IconBtnWithSlash>
+		<!-- <v-expansion-panels>
 			<v-expansion-panel>
 				<v-expansion-panel-title height="36px">
 					<v-icon size="x-small">mdi-cog</v-icon>
@@ -107,7 +110,7 @@ const buttons = {
 					</div>
 				</v-expansion-panel-text>
 			</v-expansion-panel>
-		</v-expansion-panels>
+		</v-expansion-panels> -->
 
 		<v-divider></v-divider>
 
@@ -185,6 +188,13 @@ const buttons = {
 .bounce-leave-to {
 	opacity: 0;
 	transition-delay: 0.1s;
+}
+
+.slashed-icon {
+	background-image: linear-gradient(to bottom right, transparent 50%, red 50%);
+	background-size: 2px 100%; /* 斜線の太さ */
+	background-repeat: no-repeat;
+	background-position: top left;
 }
 
 /* v-btnがTextをすべて大文字に変える仕様なので、その対応 */
