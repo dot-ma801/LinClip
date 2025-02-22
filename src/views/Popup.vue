@@ -106,16 +106,16 @@ const buttons = {
 				>
 					{{ item.btnText }}
 				</v-btn>
-				<div class="tooltip">
-					<v-icon class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
-					<span class="tooltip-text" v-html="item.description"></span>
-				</div>
 				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
 					mdi-check-circle
 				</v-icon>
 				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large">
 					mdi-close-circle
 				</v-icon>
+				<div v-else class="tooltip">
+					<v-icon class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+					<span class="tooltip-text" v-html="item.description"></span>
+				</div>
 			</div>
 		</template>
 		<v-divider></v-divider>
