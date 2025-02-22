@@ -2,12 +2,13 @@
 import { getTabInfo } from '@/Utils/tabs';
 import { copyToClipboard } from '@/Utils/copy';
 import { ref } from 'vue';
+import markdownIcon from '@/assets/icons/components/markdownIcon.vue';
 
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
-const copyStatus = ref<{ markdown: CopyStatus; blob: CopyStatus; text: CopyStatus }>({
+const copyStatus = ref<{ markdown: CopyStatus; hyperlink: CopyStatus; text: CopyStatus }>({
 	markdown: 'waiting',
-	blob: 'waiting',
+	hyperlink: 'waiting',
 	text: 'waiting',
 });
 
@@ -22,7 +23,7 @@ const onclickMarkdown = async () => {
 	copyToClipboardWithStatus(clipboardItem, 'markdown');
 };
 
-const onclickBlob = async () => {
+const onclickHyperlink = async () => {
 	const { title, url } = await getTabInfo();
 
 	const blob = {
@@ -32,7 +33,7 @@ const onclickBlob = async () => {
 	};
 	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipboardWithStatus(clipboardItem, 'blob');
+	copyToClipboardWithStatus(clipboardItem, 'hyperlink');
 };
 
 const onclickText = async () => {
@@ -68,17 +69,22 @@ const copyToClipboardWithStatus = (clipboardItem: ClipboardItem, statusKey: keyo
 const buttons = {
 	markdown: {
 		btnText: 'Copy Link as Markdown',
-		prependIcon: 'mdi-alpha-m-box',
+		prependIcon: markdownIcon,
+		description: 'markdown形式でコピーします。<br>[タブタイトル](URL)',
 		clickHandler: onclickMarkdown,
 	},
-	blob: {
-		btnText: 'Copy Link as Blob',
-		prependIcon: 'mdi-code-braces',
-		clickHandler: onclickBlob,
+	hyperlink: {
+		btnText: 'Copy Link as Hyperlink',
+		prependIcon: 'mdi-link-variant',
+		description: `
+			ハイパーリンク形式でコピーします。<br>
+			microsoft teams や PowerPoint 等リッチテキストボックス<br>に貼り付ける際に便利です。`,
+		clickHandler: onclickHyperlink,
 	},
 	text: {
 		btnText: 'Copy Title as Text',
 		prependIcon: 'mdi-format-text',
+		description: 'プレーンテキストでタブタイトルのみをコピーします。',
 		clickHandler: onclickText,
 	},
 };
@@ -92,16 +98,22 @@ const buttons = {
 
 	<div class="button-container">
 		<template v-for="(item, key) in buttons">
-			<v-btn :prepend-icon="item.prependIcon" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
-				{{ item.btnText }}
-				<!-- FIXME: ボタンの外に出したい: Styleが崩れてしまい、うまく出せていない -->
-				<template v-slot:append>
-					<Transition name="bounce">
-						<v-icon v-if="copyStatus[key] == 'success'" color="success">mdi-check-circle</v-icon>
-						<v-icon v-if="copyStatus[key] == 'fail'" color="error">mdi-close-circle</v-icon>
-					</Transition>
-				</template>
-			</v-btn>
+			<div class="button-row">
+				<v-btn class="feature-btn" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
+					<v-icon class="prepend-icon" :icon="item.prependIcon"></v-icon>
+					{{ item.btnText }}
+				</v-btn>
+				<v-icon v-if="copyStatus[key] == 'success'" class="append-icon" color="success" size="x-large">
+					mdi-check-circle
+				</v-icon>
+				<v-icon v-else-if="copyStatus[key] == 'fail'" class="append-icon" color="error" size="x-large">
+					mdi-close-circle
+				</v-icon>
+				<div v-else class="tooltip">
+					<v-icon class="append-icon" size="x-large">mdi-information-slab-circle</v-icon>
+					<span class="tooltip-text" v-html="item.description"></span>
+				</div>
+			</div>
 		</template>
 		<v-divider></v-divider>
 		<v-btn prepend-icon="mdi-plus" stacked :disabled="true"> add another pattern </v-btn>
@@ -131,6 +143,20 @@ const buttons = {
 	gap: 10px;
 }
 
+.button-row {
+	display: flex;
+	align-items: center;
+}
+
+.feature-btn {
+	width: 90%;
+	margin-right: 5px;
+}
+
+.prepend-icon {
+	margin-right: 5px;
+}
+
 .bounce-enter-active {
 	transition:
 		transform 0.5s ease,
@@ -158,6 +184,49 @@ const buttons = {
 .bounce-leave-to {
 	opacity: 0;
 	transition-delay: 0.1s;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltip-text {
+	visibility: hidden;
+	width: 300px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 5px;
+	padding: 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 0;
+	transform: translateX(-100%);
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-size: 0.9em;
+}
+
+.tooltip .tooltip-text::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.tooltip:hover .append-icon {
+	color: #2196f3;
 }
 
 /* v-btnがTextをすべて大文字に変える仕様なので、その対応 */
