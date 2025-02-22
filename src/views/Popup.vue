@@ -103,14 +103,14 @@ const buttons = {
 					<v-icon class="prepend-icon" :icon="item.prependIcon"></v-icon>
 					{{ item.btnText }}
 				</v-btn>
-				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
+				<v-icon v-if="copyStatus[key] == 'success'" class="append-icon" color="success" size="x-large">
 					mdi-check-circle
 				</v-icon>
-				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large">
+				<v-icon v-else-if="copyStatus[key] == 'fail'" class="append-icon" color="error" size="x-large">
 					mdi-close-circle
 				</v-icon>
 				<div v-else class="tooltip">
-					<v-icon class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+					<v-icon class="append-icon" size="x-large">mdi-information-slab-circle</v-icon>
 					<span class="tooltip-text" v-html="item.description"></span>
 				</div>
 			</div>
@@ -150,14 +150,11 @@ const buttons = {
 
 .feature-btn {
 	width: 90%;
+	margin-right: 5px;
 }
 
 .prepend-icon {
 	margin-right: 5px;
-}
-
-.information-icon {
-	margin: 0 10px;
 }
 
 .bounce-enter-active {
@@ -226,6 +223,10 @@ const buttons = {
 .tooltip:hover .tooltip-text {
 	visibility: visible;
 	opacity: 1;
+}
+
+.tooltip:hover .append-icon {
+	color: #2196f3;
 }
 
 /* v-btnがTextをすべて大文字に変える仕様なので、その対応 */
