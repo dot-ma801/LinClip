@@ -69,16 +69,21 @@ const buttons = {
 	markdown: {
 		btnText: 'Copy Link as Markdown',
 		prependIcon: 'mdi-alpha-m-box',
+		description: 'markdown形式でコピーします。[タブタイトル](URL)',
 		clickHandler: onclickMarkdown,
 	},
 	blob: {
 		btnText: 'Copy Link as Blob',
 		prependIcon: 'mdi-code-braces',
+		description: `
+			ハイパーリンク形式でコピーします。
+			microsoft teams や PowerPoint 等に貼り付けたいときに便利です。`,
 		clickHandler: onclickBlob,
 	},
 	text: {
 		btnText: 'Copy Title as Text',
 		prependIcon: 'mdi-format-text',
+		description: 'プレーンテキストでタブタイトルのみをコピーします。',
 		clickHandler: onclickText,
 	},
 };
@@ -108,7 +113,7 @@ const buttons = {
 				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large">
 					mdi-close-circle
 				</v-icon>
-				<v-tooltip v-else text="aaa" location="top">
+				<v-tooltip v-else :text="item.description" location="top">
 					<template v-slot:activator="{ props }">
 						<v-icon v-bind="props" class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
 					</template>
