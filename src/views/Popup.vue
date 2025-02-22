@@ -102,13 +102,17 @@ const buttons = {
 					{{ item.btnText }}
 				</v-btn>
 				<!-- NOTE: extension で見ると 開発サーバで確認したときより小さく描画されるので、size="x-large" としている -->
-				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large"
-					>mdi-check-circle</v-icon
-				>
-				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large"
-					>mdi-close-circle</v-icon
-				>
-				<v-icon v-else class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
+					mdi-check-circle
+				</v-icon>
+				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large">
+					mdi-close-circle
+				</v-icon>
+				<v-tooltip v-else text="aaa" location="top">
+					<template v-slot:activator="{ props }">
+						<v-icon v-bind="props" class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+					</template>
+				</v-tooltip>
 			</div>
 		</template>
 		<v-divider></v-divider>
