@@ -5,8 +5,12 @@
 	"permissions": ["tabs", "clipboardWrite"],
 	"version": "1.0",
 	"action": {
-		"default_popup": "index.html",
-		"default_icon": "test_icon.png"
+		"default_popup": "index.html"
+	},
+	"icons": {
+		"16": "logo16.png",
+		"48": "logo48.png",
+		"128": "logo128.png"
 	},
 	"content_scripts": [
 		{
