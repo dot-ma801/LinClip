@@ -106,18 +106,16 @@ const buttons = {
 				>
 					{{ item.btnText }}
 				</v-btn>
-				<!-- NOTE: extension で見ると 開発サーバで確認したときより小さく描画されるので、size="x-large" としている -->
+				<div class="tooltip">
+					<v-icon class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+					<span class="tooltip-text">{{ item.description }}</span>
+				</div>
 				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
 					mdi-check-circle
 				</v-icon>
 				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large">
 					mdi-close-circle
 				</v-icon>
-				<v-tooltip v-else :text="item.description" location="top">
-					<template v-slot:activator="{ props }">
-						<v-icon v-bind="props" class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
-					</template>
-				</v-tooltip>
 			</div>
 		</template>
 		<v-divider></v-divider>
@@ -188,6 +186,44 @@ const buttons = {
 .bounce-leave-to {
 	opacity: 0;
 	transition-delay: 0.1s;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltip-text {
+	visibility: hidden;
+	width: 300px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 5px;
+	padding: 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 0;
+	transform: translateX(-100%);
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltip .tooltip-text::after {
+	content: '';
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
 }
 
 /* v-btnがTextをすべて大文字に変える仕様なので、その対応 */
