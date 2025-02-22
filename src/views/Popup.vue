@@ -5,9 +5,9 @@ import { ref } from 'vue';
 
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
-const copyStatus = ref<{ markdown: CopyStatus; blob: CopyStatus; text: CopyStatus }>({
+const copyStatus = ref<{ markdown: CopyStatus; hyperlink: CopyStatus; text: CopyStatus }>({
 	markdown: 'waiting',
-	blob: 'waiting',
+	hyperlink: 'waiting',
 	text: 'waiting',
 });
 
@@ -22,7 +22,7 @@ const onclickMarkdown = async () => {
 	copyToClipboardWithStatus(clipboardItem, 'markdown');
 };
 
-const onclickBlob = async () => {
+const onclickHyperlink = async () => {
 	const { title, url } = await getTabInfo();
 
 	const blob = {
@@ -32,7 +32,7 @@ const onclickBlob = async () => {
 	};
 	const clipboardItem = new ClipboardItem(blob);
 
-	copyToClipboardWithStatus(clipboardItem, 'blob');
+	copyToClipboardWithStatus(clipboardItem, 'hyperlink');
 };
 
 const onclickText = async () => {
@@ -72,13 +72,13 @@ const buttons = {
 		description: 'markdown形式でコピーします。<br>[タブタイトル](URL)',
 		clickHandler: onclickMarkdown,
 	},
-	blob: {
-		btnText: 'Copy Link as Blob',
-		prependIcon: 'mdi-code-braces',
+	hyperlink: {
+		btnText: 'Copy Link as Hyperlink',
+		prependIcon: 'mdi-link-variant',
 		description: `
 			ハイパーリンク形式でコピーします。<br>
 			microsoft teams や PowerPoint 等リッチテキストボックス<br>に貼り付ける際に便利です。`,
-		clickHandler: onclickBlob,
+		clickHandler: onclickHyperlink,
 	},
 	text: {
 		btnText: 'Copy Title as Text',
