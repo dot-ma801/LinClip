@@ -69,15 +69,15 @@ const buttons = {
 	markdown: {
 		btnText: 'Copy Link as Markdown',
 		prependIcon: 'mdi-alpha-m-box',
-		description: 'markdown形式でコピーします。[タブタイトル](URL)',
+		description: 'markdown形式でコピーします。<br>[タブタイトル](URL)',
 		clickHandler: onclickMarkdown,
 	},
 	blob: {
 		btnText: 'Copy Link as Blob',
 		prependIcon: 'mdi-code-braces',
 		description: `
-			ハイパーリンク形式でコピーします。
-			microsoft teams や PowerPoint 等に貼り付けたいときに便利です。`,
+			ハイパーリンク形式でコピーします。<br>
+			microsoft teams や PowerPoint 等リッチテキストボックス<br>に貼り付ける際に便利です。`,
 		clickHandler: onclickBlob,
 	},
 	text: {
@@ -108,7 +108,7 @@ const buttons = {
 				</v-btn>
 				<div class="tooltip">
 					<v-icon class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
-					<span class="tooltip-text">{{ item.description }}</span>
+					<span class="tooltip-text" v-html="item.description"></span>
 				</div>
 				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
 					mdi-check-circle
@@ -208,6 +208,7 @@ const buttons = {
 	transform: translateX(-100%);
 	opacity: 0;
 	transition: opacity 0.3s;
+	font-size: 0.9em;
 }
 
 .tooltip .tooltip-text::after {
