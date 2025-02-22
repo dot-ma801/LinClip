@@ -92,16 +92,24 @@ const buttons = {
 
 	<div class="button-container">
 		<template v-for="(item, key) in buttons">
-			<v-btn :prepend-icon="item.prependIcon" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
-				{{ item.btnText }}
-				<!-- FIXME: ボタンの外に出したい: Styleが崩れてしまい、うまく出せていない -->
-				<template v-slot:append>
-					<Transition name="bounce">
-						<v-icon v-if="copyStatus[key] == 'success'" color="success">mdi-check-circle</v-icon>
-						<v-icon v-if="copyStatus[key] == 'fail'" color="error">mdi-close-circle</v-icon>
-					</Transition>
-				</template>
-			</v-btn>
+			<div class="button-row">
+				<v-btn
+					class="feature-btn"
+					:prepend-icon="item.prependIcon"
+					:disabled="copyStatus[key] == 'loading'"
+					@click="item.clickHandler"
+				>
+					{{ item.btnText }}
+				</v-btn>
+				<!-- NOTE: extension で見ると 開発サーバで確認したときより小さく描画されるので、size="x-large" としている -->
+				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large"
+					>mdi-check-circle</v-icon
+				>
+				<v-icon v-else-if="copyStatus[key] == 'fail'" class="information-icon" color="error" size="x-large"
+					>mdi-close-circle</v-icon
+				>
+				<v-icon v-else class="information-icon" size="x-large">mdi-information-slab-circle</v-icon>
+			</div>
 		</template>
 		<v-divider></v-divider>
 		<v-btn prepend-icon="mdi-plus" stacked :disabled="true"> add another pattern </v-btn>
@@ -129,6 +137,19 @@ const buttons = {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+
+.button-row {
+	display: flex;
+	align-items: center;
+}
+
+.feature-btn {
+	width: 90%;
+}
+
+.information-icon {
+	margin: 0 10px;
 }
 
 .bounce-enter-active {
