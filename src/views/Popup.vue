@@ -4,6 +4,10 @@ import { copyToClipboard } from '@/Utils/copy';
 import { ref } from 'vue';
 import markdownIcon from '@/assets/icons/components/markdownIcon.vue';
 
+const VERSION = import.meta.env.VITE_APP_VERSION;
+const GITHUB_LINK = import.meta.env.VITE_GITHUB_LINK;
+const FEEDBACK_LINK = import.meta.env.VITE_FEEDBACK_LINK + VERSION;
+
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
 const copyStatus = ref<{ markdown: CopyStatus; hyperlink: CopyStatus; text: CopyStatus }>({
@@ -118,6 +122,17 @@ const buttons = {
 		<v-divider></v-divider>
 		<v-btn prepend-icon="mdi-plus" stacked :disabled="true"> add another pattern </v-btn>
 	</div>
+	<div class="footer-container">
+		<span>Version: {{ VERSION }}</span>
+		<div class="footer-links">
+			<a :href="GITHUB_LINK" target="_blank" rel="noopener noreferrer">
+				<v-icon class="footer-icon">mdi-github</v-icon>
+			</a>
+			<a :href="FEEDBACK_LINK" target="_blank" rel="noopener noreferrer">
+				<v-icon class="footer-icon">mdi-comment-question-outline</v-icon>
+			</a>
+		</div>
+	</div>
 </template>
 
 <style scoped>
@@ -226,6 +241,31 @@ const buttons = {
 }
 
 .tooltip:hover .append-icon {
+	color: #2196f3;
+}
+
+.footer-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+	font-size: 14px;
+	color: gray;
+}
+
+.footer-links {
+	display: flex;
+	gap: 15px;
+	margin-left: 15px;
+}
+
+.footer-icon {
+	cursor: pointer;
+	color: gray;
+	transition: color 0.3s;
+}
+
+.footer-icon:hover {
 	color: #2196f3;
 }
 
