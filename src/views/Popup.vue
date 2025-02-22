@@ -2,6 +2,7 @@
 import { getTabInfo } from '@/Utils/tabs';
 import { copyToClipboard } from '@/Utils/copy';
 import { ref } from 'vue';
+import markdownIcon from '@/assets/icons/components/markdownIcon.vue';
 
 type CopyStatus = 'waiting' | 'loading' | 'success' | 'fail';
 
@@ -68,7 +69,7 @@ const copyToClipboardWithStatus = (clipboardItem: ClipboardItem, statusKey: keyo
 const buttons = {
 	markdown: {
 		btnText: 'Copy Link as Markdown',
-		prependIcon: 'mdi-alpha-m-box',
+		prependIcon: markdownIcon,
 		description: 'markdown形式でコピーします。<br>[タブタイトル](URL)',
 		clickHandler: onclickMarkdown,
 	},
@@ -98,12 +99,8 @@ const buttons = {
 	<div class="button-container">
 		<template v-for="(item, key) in buttons">
 			<div class="button-row">
-				<v-btn
-					class="feature-btn"
-					:prepend-icon="item.prependIcon"
-					:disabled="copyStatus[key] == 'loading'"
-					@click="item.clickHandler"
-				>
+				<v-btn class="feature-btn" :disabled="copyStatus[key] == 'loading'" @click="item.clickHandler">
+					<v-icon class="prepend-icon" :icon="item.prependIcon"></v-icon>
 					{{ item.btnText }}
 				</v-btn>
 				<v-icon v-if="copyStatus[key] == 'success'" class="information-icon" color="success" size="x-large">
@@ -153,6 +150,10 @@ const buttons = {
 
 .feature-btn {
 	width: 90%;
+}
+
+.prepend-icon {
+	margin-right: 5px;
 }
 
 .information-icon {
