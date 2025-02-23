@@ -4,12 +4,13 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueDevTools from 'vite-plugin-vue-devtools';
 import packageJson from './package.json';
+import syncManifestVersion from './plugins/syncManifestVersion';
 
 export default defineConfig({
   define: {
     'import.meta.env.VITE_APP_VERSION': JSON.stringify(packageJson.version),
   },
-  plugins: [vue(), vueDevTools()],
+  plugins: [syncManifestVersion(), vue(), vueDevTools()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
