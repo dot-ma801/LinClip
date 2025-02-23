@@ -6,5 +6,5 @@
  * @param failCallBack - コピー失敗時に呼び出されるコールバック関数
  */
 export const copyToClipboard = (value: ClipboardItem, successCallBack?: () => void, failCallBack?: () => void) => {
-	navigator.clipboard.write([value]).then(successCallBack).catch(failCallBack);
+  navigator.clipboard.write([value]).then(successCallBack).catch(failCallBack);
 };
