@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { getTabInfo } from '@/Utils/tabs';
-import { copyToClipboard } from '@/Utils/copy';
+import { getTabInfo } from '@/utils/tabs';
+import { copyToClipboard } from '@/utils/copy';
 import { ref } from 'vue';
 import markdownIcon from '@/assets/icons/components/markdownIcon.vue';
 
