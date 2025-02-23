@@ -246,7 +246,6 @@ const buttons = {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
   font-size: 14px;
   color: gray;
 }
