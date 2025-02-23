@@ -12,10 +12,6 @@ jobs:
         with:
           node-version: '20'
       - name: Install dependencies
-        run: |
-          npm install
+        run: npm install
       - name: Build project
-        run: |
-          pwd
-          ls -al
-          npm run build
+        run: npm run build
