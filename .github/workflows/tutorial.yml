@@ -1,18 +1,13 @@
 name: tutorial
 on: [push]
 jobs:
-  my_first_job:
-    name: my first job
-    runs-on: ubuntu-latest
+  build:
+    name: build
+    runs-on: ubuntu-22.04
     steps:
-      - name: echo first job
-        run: echo first job
-  my_second_job:
-    name: my second job
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo second job
+      - name: build
         run: |
-          echo second job
-          pwd
-          ls -al
+          node -v
+          npm -v
+          npm install
+          npm run build
