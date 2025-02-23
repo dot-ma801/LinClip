@@ -27,6 +27,8 @@ jobs:
           name: dist
           path: dist
 
+  # deploy jobの動作確認用
+  # 内容はまだ空
   deploy:
     name: deploy
     runs-on: ubuntu-22.04
