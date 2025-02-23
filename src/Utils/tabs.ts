@@ -4,10 +4,10 @@
  * @returns タブタイトル、URL
  */
 export const getTabInfo = async () => {
-	const title = await getCurrentTabTitle();
-	const url = await getCurrentTabUrl();
+  const title = await getCurrentTabTitle();
+  const url = await getCurrentTabUrl();
 
-	return { title, url };
+  return { title, url };
 };
 
 /**
@@ -16,8 +16,8 @@ export const getTabInfo = async () => {
  * @returns 現在のTabのURL
  */
 export const getCurrentTabUrl = async () => {
-	const tabInfo = await getCurrentTabInfo();
-	return tabInfo[0].url;
+  const tabInfo = await getCurrentTabInfo();
+  return tabInfo[0].url;
 };
 
 /**
@@ -26,8 +26,8 @@ export const getCurrentTabUrl = async () => {
  * @returns 現在のTabのTitle
  */
 export const getCurrentTabTitle = async () => {
-	const tabInfo = await getCurrentTabInfo();
-	return tabInfo[0].title;
+  const tabInfo = await getCurrentTabInfo();
+  return tabInfo[0].title;
 };
 
 /**
@@ -36,7 +36,7 @@ export const getCurrentTabTitle = async () => {
  * @returns 現在のTabの詳細情報
  */
 const getCurrentTabInfo = async () => {
-	const queryOptions = { active: true, lastFocusedWindow: true };
-	const tabInfo = await chrome.tabs.query(queryOptions);
-	return tabInfo;
+  const queryOptions = { active: true, lastFocusedWindow: true };
+  const tabInfo = await chrome.tabs.query(queryOptions);
+  return tabInfo;
 };

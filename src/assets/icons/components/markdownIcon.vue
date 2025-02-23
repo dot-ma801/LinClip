@@ -3,11 +3,11 @@ import markDown from '@/assets/icons/svg/markdownPaste.svg';
 </script>
 
 <template>
-	<img :src="markDown" />
+  <img :src="markDown" />
 </template>
 
 <style scoped>
 img {
-	height: 20px;
+  height: 20px;
 }
 </style>
