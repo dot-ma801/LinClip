@@ -1,17 +1,20 @@
 name: Deploy to Chrome web store
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+    tags:
+      - 'v*.*.*'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run one line script
-        run: echo Hello, world!!!!!!!
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+
+          - name: Zip dist
+          uses: montudor/action-zip@v1
+          with:
+            args: zip -qq -r release.zip dist
