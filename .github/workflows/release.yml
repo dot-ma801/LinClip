@@ -1,0 +1,47 @@
+name: release
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  # deploy jobの動作確認用
+  # 内容はまだ空
+  deploy:
+    name: deploy
+    runs-on: ubuntu-22.04
+    needs: build
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy application
+        run: |
+          echo "Deploying application..."
+          ls dist
