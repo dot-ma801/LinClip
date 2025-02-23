@@ -119,8 +119,6 @@ const buttons = {
         </div>
       </div>
     </template>
-    <v-divider></v-divider>
-    <v-btn prepend-icon="mdi-plus" stacked :disabled="true"> add another pattern </v-btn>
   </div>
   <div class="footer-container">
     <span>Version: {{ VERSION }}</span>
