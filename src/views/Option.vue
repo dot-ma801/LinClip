@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import '@mdi/font/css/materialdesignicons.css';
 import { ref, onMounted } from 'vue';
+import SettingPerRegex from '@/components/SettingPerRegex.vue';
+
+import { configForTest } from '@/types/type';
 
 const jsonData = ref<any>(null);
 
@@ -50,6 +53,7 @@ const select_file = () => {
 
 <template>
   <h1>This is an Option page</h1>
+  <SettingPerRegex :data="configForTest.data"></SettingPerRegex>
   <v-btn class="btn" prepend-icon="mdi-database-import-outline" @click="select_file">JSONデータインポート</v-btn>
   <v-btn class="btn" prepend-icon="mdi-database-export-outline" @click="">JSONデータエクスポート</v-btn>
 
@@ -57,11 +61,6 @@ const select_file = () => {
 </template>
 
 <style scoped>
-.btn-container {
-  /* display: flex;
-  flex-direction: column; */
-}
-
 .btn {
   margin: 5px;
 }
