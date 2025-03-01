@@ -92,10 +92,14 @@ const buttons = {
     clickHandler: onclickText,
   },
 };
+
+const openOptions = () => {
+  chrome.runtime.openOptionsPage();
+};
 </script>
 
 <template>
-  <v-btn class="cog" variant="text" icon="mdi-cog-box"></v-btn>
+  <v-btn class="cog" variant="text" icon="mdi-cog-box" @click="openOptions"></v-btn>
 
   <div class="title-container">
     <v-icon size="64" color="success">mdi-content-copy</v-icon>
