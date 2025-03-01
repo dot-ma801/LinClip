@@ -95,6 +95,8 @@ const buttons = {
 </script>
 
 <template>
+  <v-btn class="cog" variant="text" icon="mdi-cog-box"></v-btn>
+
   <div class="title-container">
     <v-icon size="64" color="success">mdi-content-copy</v-icon>
     <span class="title-character">LinClip</span>
@@ -147,6 +149,11 @@ const buttons = {
   font-weight: bold;
   margin-left: 8px;
   color: var(--vt-c-black);
+}
+
+.cog {
+  position: fixed;
+  right: 0;
 }
 
 .button-container {
