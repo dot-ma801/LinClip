@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "LinClip",
   "description": "テキストベースでのWebページ共有をサポート",
-  "permissions": ["tabs", "clipboardWrite"],
+  "permissions": ["tabs", "clipboardWrite", "storage"],
   "version": "{{version}}",
   "action": {
     "default_popup": "index.html"
